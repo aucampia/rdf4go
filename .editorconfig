@@ -1,0 +1,109 @@
+# http://editorconfig.org/#file-format-details
+# ln -s d/gitlab.com/aucampia/snippets-000/.editorconfig ~/.editorconfig
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{yaml,yml}]
+indent_style = space
+indent_size = 2
+
+[*.install4j]
+trim_trailing_whitespace = false
+indent_style = space
+indent_size = 2
+
+[*.json]
+indent_style = space
+indent_size = 2
+
+# https://www.oracle.com/java/technologies/javase/codeconventions-indentation.html
+# https://google.github.io/styleguide/javaguide.html#s4.2-block-indentation
+[*.{java,javax}]
+indent_style = space
+# indent_size = 4
+indent_size = 2
+
+# https://kotlinlang.org/docs/coding-conventions.html#formatting
+[*.{kt,kts}]
+indent_style = space
+indent_size = 4
+
+# https://github.com/diffplug/spotless/blob/main/gradle/spotless.eclipseformat.xml
+[*.gradle]
+indent_style = tab
+indent_size = 4
+
+[*.{js,jsx,ts,tsx}]
+indent_style = space
+indent_size = 2
+
+[*.{css,css_t}]
+indent_style = space
+indent_size = 2
+
+[*.{html,htm,xml}]
+indent_style = space
+indent_size = 2
+
+# https://www.python.org/dev/peps/pep-0008/#indentation
+[*.{py,py}]
+indent_style = space
+indent_size = 4
+
+# https://github.com/ruby/ruby/blob/master/.editorconfig
+[*.rb]
+indent_style = space
+indent_size = 2
+
+[{Vagrantfile,Vagrantfile.*,*.Vagrantfile}]
+indent_style = space
+indent_size = 2
+
+[*.rst]
+indent_style = space
+indent_size = 4
+
+# https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html#tag_20_76_13_04
+# https://www.gnu.org/software/make/manual/make.html#Rule-Introduction
+# http://heirloom.sourceforge.net/devtools/make.1.html
+[{makefile,Makefile,*.mk,*.make}]
+indent_style = tab
+
+# https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Here-Documents
+#[*.sh]
+#indent_style = tab
+
+[*.{bat,cmd,btm}]
+end_of_line = crlf
+insert_final_newline = false
+
+[*.diff]
+trim_trailing_whitespace = false
+
+# https://github.com/asciidoctor/asciidoctor.org/blob/master/.editorconfig
+[*.adoc]
+indent_style = space
+indent_size = 2
+
+# https://daringfireball.net/projects/markdown/syntax#list
+# https://spec.commonmark.org/0.7/#motivation
+[*.md]
+indent_style = space
+indent_size = 4
+
+[*.tsv]
+indent_style = tab
+
+[*.rsc]
+end_of_line = crlf
+
+# https://golang.org/pkg/cmd/gofmt/
+[*.go]
+indent_style = tab
