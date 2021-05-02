@@ -1,34 +1,26 @@
+// SPDX-FileCopyrightText: 2021 Iwan Aucamp
+//
+// SPDX-License-Identifier: CC0-1.0 OR Apache-2.0
+
 package rdf4go
 
-import (
-	"errors"
-	"strings"
-)
-
 ////////////////////////////////////////////////////////////////////////////////
-// type SimpleBlank
+// type SimpleBnode
 ////////////////////////////////////////////////////////////////////////////////
 
-type SimpleBlank struct {
+type SimpleBnode struct {
 	id string
 }
 
-func (*SimpleBlank) isSubjectType() {}
-func (*SimpleBlank) isObjectType()  {}
+func (*SimpleBnode) isSubjectType() {}
+func (*SimpleBnode) isObjectType()  {}
 
-func (s *SimpleBlank) Id() string {
+func (s *SimpleBnode) Id() string {
 	return s.id
 }
 
-func (s *SimpleBlank) String() string {
+func (s *SimpleBnode) String() string {
 	return s.id
-}
-
-func NewSimpleBlank(id string) (*SimpleBlank, error) {
-	if len(strings.TrimSpace(id)) == 0 {
-		return nil, errors.New("blank id")
-	}
-	return &SimpleBlank{id: id}, nil
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,14 +43,6 @@ func (s *SimpleIRI) String() string {
 	return s.value
 }
 
-func NewSimpleIRI(value string) (*SimpleIRI, error) {
-	err := ValidateIRI(value)
-	if err != nil {
-		return nil, err
-	}
-	return &SimpleIRI{value: value}, nil
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // type SimpleLiteral
 ////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +51,7 @@ func NewSimpleIRI(value string) (*SimpleIRI, error) {
 type SimpleLiteral struct {
 	value    string
 	language *string
-	dataType IRI
+	dataType *IRI
 }
 
 func (*SimpleLiteral) isObjectType() {}
@@ -80,10 +64,29 @@ func (s *SimpleLiteral) Language() *string {
 	return s.language
 }
 
-func (s *SimpleLiteral) DataType() IRI {
+func (s *SimpleLiteral) DataType() *IRI {
 	return s.dataType
 }
 
-func NewSimpleLiteral(value string, language *string, dataType IRI) (*SimpleLiteral, error) {
+////////////////////////////////////////////////////////////////////////////////
+// type SimpleValueFactory
+////////////////////////////////////////////////////////////////////////////////
+
+type SimpleValueFactory struct {
+}
+
+func (f *SimpleValueFactory) NewBNode(id string) (*SimpleBnode, error) {
+	return &SimpleBnode{id: id}, nil
+}
+
+func (f *SimpleValueFactory) NewIRI(value string) (*SimpleIRI, error) {
+	err := ValidateIRI(value)
+	if err != nil {
+		return nil, err
+	}
+	return &SimpleIRI{value: value}, nil
+}
+
+func (f *SimpleValueFactory) NewLiteral(value string, language *string, dataType *IRI) (*SimpleLiteral, error) {
 	return &SimpleLiteral{value: value, language: language, dataType: dataType}, nil
 }

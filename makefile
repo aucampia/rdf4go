@@ -79,8 +79,13 @@ $(modd_bin): | $(tools_dir)/ $(cache_dir)/
 	cd $(cache_dir) && wget -c https://github.com/cortesi/modd/releases/download/v$(modd_version)/modd-$(modd_version)-linux64.tgz
 	tar -zxvf $(cache_dir)/modd-0.8-linux64.tgz --strip-components=1 -C $(tools_dir)
 
+antlr_jar=$(cache_dir)/antlr-4.9.2-complete.jar
+antlr=java -jar $(antlr_jar)
+$(antlr_jar): | $(cache_dir)/
+	wget -O $(@) https://www.antlr.org/download/$(notdir $(@))
+
 .PHONY: toolchain
-toolchain: $(modd_bin)
+toolchain: $(modd_bin) $(antlr_jar)
 	cd ~/ && go get $(if $(filter all commands,$(VERBOSE)),-v) $(go_get_flags) \
 		github.com/golangci/golangci-lint/cmd/golangci-lint@v1.39.0 \
 		&& true
@@ -99,7 +104,7 @@ validate-fix:
 
 .PHONY: test
 test:
-	go test -cover -race ./...
+	go test -cover -race $(if $(filter all commands,$(VERBOSE)),-v) ./...
 
 .PHONY: validate-dynamic
 validate-dynamic: test
@@ -113,6 +118,8 @@ watch: $(modd_bin)
 
 .PHONY: generate
 generate:
+	#$(antlr) -Dlanguage=Go NT.g4 -o internal/nt_parser/ -visitor -package nt_parser
+	$(antlr) -Dlanguage=Go NT.g4 -o internal/nt_parser/ -package nt_parser
 
 
 go_ldflags= \
