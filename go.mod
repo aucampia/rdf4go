@@ -1,6 +1,6 @@
-module gobn.github.io/rdf4go
+module github.com/aucampia/rdf4go
 
-go 1.16
+go 1.17
 
 require (
 	github.com/antlr/antlr4 v0.0.0-20210427155808-62554204404f
